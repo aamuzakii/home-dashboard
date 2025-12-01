@@ -4,10 +4,6 @@ import { PRAYER_TIMES } from "./constants";
 import AzanTimer from "./AzanTimer";
 import WorkTracker from "./WorkTracker";
 
-
-
-
-
 /**
  * Get the last prayer time (could be Isha of yesterday if before Fajr),
  * and how many seconds have passed since that azan.
@@ -21,7 +17,7 @@ function getLastPrayer(now: Date) {
     0,
     0,
     0,
-    0,
+    0
   );
 
   let lastIndex = PRAYER_TIMES.length - 1;
@@ -51,7 +47,10 @@ function getLastPrayer(now: Date) {
     lastDate = candidate;
   }
 
-  const secondsSince = Math.max(0, Math.floor((now.getTime() - lastDate.getTime()) / 1000));
+  const secondsSince = Math.max(
+    0,
+    Math.floor((now.getTime() - lastDate.getTime()) / 1000)
+  );
 
   return {
     index: lastIndex,
@@ -64,7 +63,9 @@ export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userName, setUserName] = useState<string | null>(null);
   const [weeklyMinutes, setWeeklyMinutes] = useState<number | null>(null);
-  const [obligationMinutes, setObligationMinutes] = useState<number | null>(null);
+  const [obligationMinutes, setObligationMinutes] = useState<number | null>(
+    null
+  );
   const [hasTodayPrayerStarted, setHasTodayPrayerStarted] = useState(false);
 
   useEffect(() => {
@@ -82,7 +83,7 @@ export default function Home() {
         0,
         0,
         0,
-        0,
+        0
       );
       const firstPrayer = PRAYER_TIMES[0];
       const firstPrayerToday = new Date(todayMidnight);
@@ -126,7 +127,7 @@ export default function Home() {
     fetchUser();
   }, []);
 
-  const MINUTES_BEFORE_FADE = 30
+  const MINUTES_BEFORE_FADE = 30;
 
   const minutes = Math.floor(timeSince / 60);
   const seconds = timeSince % 60;
@@ -136,7 +137,9 @@ export default function Home() {
 
   const currentPrayer = PRAYER_TIMES[currentIndex];
   const showTimer =
-    hasTodayPrayerStarted && timeSince > 0 && timeSince <= MINUTES_BEFORE_FADE * 60;
+    hasTodayPrayerStarted &&
+    timeSince > 0 &&
+    timeSince <= MINUTES_BEFORE_FADE * 60;
 
   const hasWorkData =
     typeof weeklyMinutes === "number" && typeof obligationMinutes === "number";
@@ -161,7 +164,10 @@ export default function Home() {
         )}
 
         {!showTimer && hasWorkData && (
-          <WorkTracker workedHours={workedHours} obligationHours={obligationHours} />
+          <WorkTracker
+            workedHours={workedHours}
+            obligationHours={obligationHours}
+          />
         )}
 
         <div className="mt-6 w-full max-w-md rounded-2xl border border-zinc-200 bg-white/70 p-4 text-left shadow-sm backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/60">
