@@ -65,6 +65,7 @@ function getLastPrayer(now: Date) {
 export default function Home() {
   const [timeSince, setTimeSince] = useState(0); // seconds since last azan
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [userName, setUserName] = useState<string | null>(null);
 
   useEffect(() => {
     const update = () => {
@@ -83,6 +84,25 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("/api/user");
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data && typeof data.name === "string") {
+          setUserName(data.name);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  const MINUTES_BEFORE_FADE = 30
+
   const minutes = Math.floor(timeSince / 60);
   const seconds = timeSince % 60;
 
@@ -90,11 +110,17 @@ export default function Home() {
   const formattedSeconds = String(seconds).padStart(2, "0");
 
   const currentPrayer = PRAYER_TIMES[currentIndex];
-  const showTimer = timeSince > 0 && timeSince <= 30 * 60;
+  const showTimer = timeSince > 0 && timeSince <= MINUTES_BEFORE_FADE * 60;
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-center gap-8 px-6 py-12 text-center text-black dark:text-zinc-50">
+        {userName && (
+          <p className="text-lg font-medium text-zinc-900 dark:text-zinc-50">
+            hello, {userName}
+          </p>
+        )}
+
         {showTimer && (
           <>
             <div className="flex flex-col items-center gap-2">
