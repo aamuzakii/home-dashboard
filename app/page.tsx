@@ -11,6 +11,48 @@ const PRAYER_TIMES: { name: PrayerName; hour: number; minute: number; label: str
   { name: "Maghrib", hour: 17, minute: 53, label: "17:53" },
   { name: "Isha", hour: 19, minute: 8, label: "19:08" },
 ];
+
+type AzanTimerProps = {
+  currentPrayer: { name: PrayerName; label: string };
+  formattedMinutes: string;
+  formattedSeconds: string;
+};
+
+function AzanTimer({ currentPrayer, formattedMinutes, formattedSeconds }: AzanTimerProps) {
+  return (
+    <>
+      <div className="flex flex-col items-center gap-2">
+        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-400">
+          After azan
+        </p>
+        <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+          {currentPrayer.name} – {currentPrayer.label}
+        </h1>
+      </div>
+
+      <div className="text-[4.5rem] font-semibold leading-none tracking-tight sm:text-[6rem]">
+        {formattedMinutes}:{formattedSeconds}
+      </div>
+
+      <p className="text-base text-zinc-600 dark:text-zinc-400">
+        Time since <span className="font-semibold">{currentPrayer.name}</span> azan.
+      </p>
+    </>
+  );
+}
+
+type WorkTrackerProps = {
+  workedHours: number;
+  obligationHours: number;
+};
+
+function WorkTracker({ workedHours, obligationHours }: WorkTrackerProps) {
+  return (
+    <p className="text-base text-zinc-700 dark:text-zinc-300">
+      already work {workedHours.toFixed(1)} hours / {obligationHours.toFixed(1)} hours
+    </p>
+  );
+}
 /**
  * Get the last prayer time (could be Isha of yesterday if before Fajr),
  * and how many seconds have passed since that azan.
@@ -66,6 +108,9 @@ export default function Home() {
   const [timeSince, setTimeSince] = useState(0); // seconds since last azan
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userName, setUserName] = useState<string | null>(null);
+  const [weeklyMinutes, setWeeklyMinutes] = useState<number | null>(null);
+  const [obligationMinutes, setObligationMinutes] = useState<number | null>(null);
+  const [hasTodayPrayerStarted, setHasTodayPrayerStarted] = useState(false);
 
   useEffect(() => {
     const update = () => {
@@ -73,6 +118,21 @@ export default function Home() {
       const { index, secondsSince } = getLastPrayer(now);
       setCurrentIndex(index);
       setTimeSince(secondsSince);
+
+      // Determine if today's first prayer time has started
+      const todayMidnight = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        0,
+        0,
+        0,
+        0,
+      );
+      const firstPrayer = PRAYER_TIMES[0];
+      const firstPrayerToday = new Date(todayMidnight);
+      firstPrayerToday.setHours(firstPrayer.hour, firstPrayer.minute, 0, 0);
+      setHasTodayPrayerStarted(now >= firstPrayerToday);
     };
 
     update();
@@ -90,8 +150,18 @@ export default function Home() {
         const res = await fetch("/api/user");
         if (!res.ok) return;
         const data = await res.json();
-        if (data && typeof data.name === "string") {
+        if (!data) return;
+
+        if (typeof data.name === "string") {
           setUserName(data.name);
+        }
+
+        if (typeof data.weeklyMinutes === "number") {
+          setWeeklyMinutes(data.weeklyMinutes);
+        }
+
+        if (typeof data.obligationMinutes === "number") {
+          setObligationMinutes(data.obligationMinutes);
         }
       } catch (error) {
         console.error("Failed to fetch user", error);
@@ -110,7 +180,13 @@ export default function Home() {
   const formattedSeconds = String(seconds).padStart(2, "0");
 
   const currentPrayer = PRAYER_TIMES[currentIndex];
-  const showTimer = timeSince > 0 && timeSince <= MINUTES_BEFORE_FADE * 60;
+  const showTimer =
+    hasTodayPrayerStarted && timeSince > 0 && timeSince <= MINUTES_BEFORE_FADE * 60;
+
+  const hasWorkData =
+    typeof weeklyMinutes === "number" && typeof obligationMinutes === "number";
+  const workedHours = hasWorkData ? weeklyMinutes / 60 : 0;
+  const obligationHours = hasWorkData ? obligationMinutes / 60 : 0;
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
@@ -122,24 +198,15 @@ export default function Home() {
         )}
 
         {showTimer && (
-          <>
-            <div className="flex flex-col items-center gap-2">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-400">
-                After azan
-              </p>
-              <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-                {currentPrayer.name} – {currentPrayer.label}
-              </h1>
-            </div>
+          <AzanTimer
+            currentPrayer={currentPrayer}
+            formattedMinutes={formattedMinutes}
+            formattedSeconds={formattedSeconds}
+          />
+        )}
 
-            <div className="text-[4.5rem] font-semibold leading-none tracking-tight sm:text-[6rem]">
-              {formattedMinutes}:{formattedSeconds}
-            </div>
-
-            <p className="text-base text-zinc-600 dark:text-zinc-400">
-              Time since <span className="font-semibold">{currentPrayer.name}</span> azan.
-            </p>
-          </>
+        {!showTimer && hasWorkData && (
+          <WorkTracker workedHours={workedHours} obligationHours={obligationHours} />
         )}
 
         <div className="mt-6 w-full max-w-md rounded-2xl border border-zinc-200 bg-white/70 p-4 text-left shadow-sm backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/60">

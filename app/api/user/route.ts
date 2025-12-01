@@ -17,7 +17,11 @@ export async function GET() {
 
     const name = user.name ?? "Anonymous";
 
-    return NextResponse.json({ name });
+
+    const weeklyMinutes = user.weeklyMinutes ?? 0;
+    const obligationMinutes = user.obligationMinutes ?? 0;
+
+    return NextResponse.json({ name, weeklyMinutes, obligationMinutes });
   } catch (error) {
     console.error("Error fetching user", error);
     return NextResponse.json(

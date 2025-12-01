@@ -8,10 +8,13 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Post[]
+  id                Int     @id @default(autoincrement())
+  email             String  @unique
+  name              String?
+  posts             Post[]
+
+  weeklyMinutes     Int      @default(0)   // total worked minutes this week
+  obligationMinutes Int      @default(2400) // default 40 hours = 40*60
 }
 
 model Post {

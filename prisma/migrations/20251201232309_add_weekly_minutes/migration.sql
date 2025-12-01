@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "obligationMinutes" INTEGER NOT NULL DEFAULT 2400,
+ADD COLUMN     "weeklyMinutes" INTEGER NOT NULL DEFAULT 0;
