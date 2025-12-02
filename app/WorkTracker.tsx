@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 type WorkTrackerProps = {
   workedHours: number;
@@ -11,39 +11,82 @@ function WorkTracker({ workedHours, obligationHours }: WorkTrackerProps) {
     Math.min(100, (workedHours / (obligationHours || 1)) * 100),
   );
 
-  const progressStyle: CSSProperties = {
-    background: `conic-gradient(rgb(16 185 129) ${percentage}%, rgb(229 231 235) ${percentage}%)`,
-  };
 
   return (
     <div className="flex w-full flex-col items-center gap-4">
-      <div className="flex flex-col items-center gap-3">
-        <div className="relative h-40 w-40 sm:h-48 sm:w-48">
-          <div
-            className="absolute inset-0 rounded-full p-[3px]"
-            style={progressStyle}
-          >
-            <div className="flex h-full w-full items-center justify-center rounded-full bg-emerald-50/80 dark:bg-emerald-950/40">
-              <div className="text-center">
-                <div className="text-xs font-semibold uppercase tracking-[0.25em] text-emerald-700 dark:text-emerald-300">
-                  worked
-                </div>
-                <div className="mt-1 text-3xl font-semibold tabular-nums text-emerald-900 dark:text-emerald-50">
-                  {workedHours.toFixed(1)}
-                </div>
-                <div className="text-xs text-emerald-700/80 dark:text-emerald-300/80">
-                  / {obligationHours.toFixed(1)} hrs
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+  <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+    <Box position="relative" display="inline-flex">
+      {/* background ring */}
+      <CircularProgress
+        variant="determinate"
+        value={100}
+        size={152}
+        thickness={4}
+        sx={{ color: "#e01cd5" }}
+      />
+      {/* progress ring */}
+      <Box
+        position="absolute"
+        top={0}
+        left={0}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        width="100%"
+        height="100%"
+      >
+        <CircularProgress
+          variant="determinate"
+          value={percentage}
+          size={152}
+          thickness={4}
+        />
+      </Box>
+      {/* center content */}
+      <Box
+        position="absolute"
+        top={0}
+        left={0}
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        width="100%"
+        height="100%"
+      >
+        <Typography
+          variant="caption"
+          sx={{
+            textTransform: "uppercase",
+            letterSpacing: "0.25em",
+            fontWeight: 600,
+          }}
+        >
+          worked
+        </Typography>
+        <Typography
+          variant="h4"
+          sx={{
+            mt: 0.5,
+            fontWeight: 600,
+            fontVariantNumeric: "tabular-nums",
+          }}
+        >
+          {workedHours.toFixed(1)}
+        </Typography>
+        <Typography
+          variant="caption"
+        >
+          / {obligationHours.toFixed(1)} hrs
+        </Typography>
+      </Box>
+    </Box>
 
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">
-          already work {workedHours.toFixed(1)} hours / {obligationHours.toFixed(1)} hours
-        </p>
-      </div>
-    </div>
+    <p className="text-sm text-zinc-600 dark:text-zinc-400">
+      already work {workedHours.toFixed(1)} hours / {obligationHours.toFixed(1)} hours
+    </p>
+  </Box>
+</div>
   );
 }
 
