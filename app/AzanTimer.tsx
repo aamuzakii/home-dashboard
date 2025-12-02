@@ -27,12 +27,5 @@ function AzanTimer({ currentPrayer, formattedMinutes, formattedSeconds }: AzanTi
   );
 }
 
-// import React from 'react'
-
-// const AzanTimer = () => {
-//   return (
-//     <div>AzanTimer</div>
-//   )
-// }
 
 export default AzanTimer
