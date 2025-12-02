@@ -15,8 +15,9 @@ DAY=$(date +%u)
 
 # Calculate obligation based on full previous weekdays + hours today
 TODAY_START=$(date -v7H -v0M -v0S +%s)
-HOURS_TODAY=$(( (NOW - TODAY_START) / 3600 ))
-if [ "$HOURS_TODAY" -lt 0 ]; then
+MINUTES_TODAY=$(( (NOW - TODAY_START) / 60 ))
+HOURS_TODAY=$(echo "$MINUTES_TODAY / 60" | bc -l)
+if [ "$HOURS_TODAY" = "" ] || (( $(echo "$HOURS_TODAY < 0" | bc -l) )); then
   HOURS_TODAY=0
 fi
 
@@ -27,16 +28,16 @@ else
   FULL_DAYS=0
 fi
 
-OBLIGATION=$(( FULL_DAYS + HOURS_TODAY ))
+OBLIGATION=$(echo "$FULL_DAYS + $HOURS_TODAY" | bc -l)
 
-if [ "$OBLIGATION" -gt $(( DAY * DAILY_OBLIGATION )) ]; then
+if (( $(echo "$OBLIGATION > $(( DAY * DAILY_OBLIGATION ))" | bc -l) )); then
   OBLIGATION=$(( DAY * DAILY_OBLIGATION ))
 fi
 
 # Cap by maximum obligation by weekday (Mon=1..Fri=5)
 
 echo "Obligation: ${OBLIGATION}h"
-OBLIGATION_MINUTE=$(( OBLIGATION * 60 ))
+OBLIGATION_MINUTE=$(echo "$OBLIGATION * 60" | bc)
 LOGFILE="/Users/aamuzakii/Library/Application Support/Upwork/Upwork/Logs/upwork..$(date +%Y%m%d).log"
 
 # Extract the last occurrence of minutesWorkedThisWeek value

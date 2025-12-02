@@ -13,6 +13,9 @@ function WorkTracker({ workedHours, obligationHours }: WorkTrackerProps) {
 
   const hours = Math.floor(workedHours);
   const minutes = Math.round((workedHours - hours) * 60);
+  const remaining = Math.max(0, obligationHours - workedHours);
+  const remainingHours = Math.floor(remaining);
+  const remainingMinutes = Math.round((remaining - remainingHours) * 60);
 
   const obligationHoursPart = Math.floor(obligationHours);
   const obligationMinutesPart = Math.round((obligationHours - obligationHoursPart) * 60);
@@ -67,7 +70,7 @@ function WorkTracker({ workedHours, obligationHours }: WorkTrackerProps) {
             fontWeight: 600,
           }}
         >
-          worked
+          need
         </Typography>
         <Typography
           variant="h4"
@@ -77,12 +80,10 @@ function WorkTracker({ workedHours, obligationHours }: WorkTrackerProps) {
             fontVariantNumeric: "tabular-nums",
           }}
         >
-          {hours}h {minutes}m
+          {remainingHours}h {remainingMinutes}m
         </Typography>
-        <Typography
-          variant="caption"
-        >
-          / {obligationHoursPart}h {obligationMinutesPart}m
+        <Typography variant="caption">
+          {/* Remaining {remainingHours}h {remainingMinutes}m */}
         </Typography>
       </Box>
     </Box>
