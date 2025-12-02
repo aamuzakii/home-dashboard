@@ -13,5 +13,5 @@ if [ -n "$MINUTES" ]; then
   curl -X POST \
     -H "Content-Type: application/json" \
     -d "{\"minutesWorkedThisWeek\": $MINUTES}" \
-    https://foo.com/upwork-timer
+    https://home-dashboard-lac.vercel.app/api/user/$MINUTES/4200
 fi

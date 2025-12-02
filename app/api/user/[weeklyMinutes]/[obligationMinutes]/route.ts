@@ -1,11 +1,6 @@
 import { PrismaClient } from "@/prisma/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { NextResponse } from "next/server";
-
-interface RouteParams {
-  weeklyMinutes: string;
-  obligationMinutes: string;
-}
+import { NextRequest, NextResponse } from "next/server";
 
 const adapter = new PrismaPg({
   connectionString: `${process.env.DATABASE_URL}`,
@@ -14,8 +9,13 @@ const adapter = new PrismaPg({
 const prisma = new PrismaClient({ adapter });
 
 export async function GET(
-  _request: Request,
-  context: { params: RouteParams }
+  _request: NextRequest,
+  context: {
+    params: Promise<{
+      weeklyMinutes: string;
+      obligationMinutes: string;
+    }>;
+  }
 ) {
   const { weeklyMinutes, obligationMinutes } = await context.params;
 
