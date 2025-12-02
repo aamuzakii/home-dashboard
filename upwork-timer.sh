@@ -10,8 +10,9 @@ MINUTES=$(grep -o '"minutesWorkedThisWeek": [0-9]*' "$LOGFILE" \
   
 echo "Minutes worked this week: $MINUTES"
 if [ -n "$MINUTES" ]; then
-  curl -X POST \
+  RESPONSE=$(curl -s -X GET \
     -H "Content-Type: application/json" \
-    -d "{\"minutesWorkedThisWeek\": $MINUTES}" \
-    https://home-dashboard-lac.vercel.app/api/user/$MINUTES/4200
+    https://home-dashboard-lac.vercel.app/api/user/$MINUTES/4200)
+
+  echo "Response: $RESPONSE"
 fi

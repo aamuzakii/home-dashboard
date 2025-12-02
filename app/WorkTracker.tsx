@@ -11,6 +11,11 @@ function WorkTracker({ workedHours, obligationHours }: WorkTrackerProps) {
     Math.min(100, (workedHours / (obligationHours || 1)) * 100),
   );
 
+  const hours = Math.floor(workedHours);
+  const minutes = Math.round((workedHours - hours) * 60);
+
+  const obligationHoursPart = Math.floor(obligationHours);
+  const obligationMinutesPart = Math.round((obligationHours - obligationHoursPart) * 60);
 
   return (
     <div className="flex w-full flex-col items-center gap-4">
@@ -72,18 +77,18 @@ function WorkTracker({ workedHours, obligationHours }: WorkTrackerProps) {
             fontVariantNumeric: "tabular-nums",
           }}
         >
-          {workedHours.toFixed(1)}
+          {hours}h {minutes}m
         </Typography>
         <Typography
           variant="caption"
         >
-          / {obligationHours.toFixed(1)} hrs
+          / {obligationHoursPart}h {obligationMinutesPart}m
         </Typography>
       </Box>
     </Box>
 
     <p className="text-sm text-zinc-600 dark:text-zinc-400">
-      already work {workedHours.toFixed(1)} hours / {obligationHours.toFixed(1)} hours
+      already work {hours}h {minutes}m / {obligationHoursPart}h {obligationMinutesPart}m
     </p>
   </Box>
 </div>
