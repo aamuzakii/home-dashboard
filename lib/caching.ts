@@ -1,7 +1,7 @@
 import { PrismaClient } from '../prisma/generated/client';
 
 const prisma = new PrismaClient({
-  accelerateUrl: process.env.DATABASE_URL,
+  accelerateUrl: process.env.DATABASE_URL as string,
 });
 
 async function main() {
@@ -15,10 +15,10 @@ async function main() {
       email: { contains: "alice" }
     },
     include: { posts: true },
-    cacheStrategy: {
-      swr: 30, // 30 seconds
-      ttl: 60  // 60 seconds
-    }
+    // cacheStrategy: {
+    //   swr: 30, // 30 seconds
+    //   ttl: 60  // 60 seconds
+    // }
   });
 
   const endTime = performance.now();

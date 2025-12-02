@@ -2,7 +2,7 @@ import { PrismaClient } from '../prisma/generated/client';
 import 'dotenv/config';
 
 const prisma = new PrismaClient({
-  accelerateUrl: process.env.DATABASE_URL,
+  accelerateUrl: process.env.DATABASE_URL as string,
 });
 
 // A `main` function so that we can use async/await
