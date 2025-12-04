@@ -125,6 +125,12 @@ export default function Home() {
     };
 
     fetchUser();
+
+    const interval = setInterval(() => {
+      fetchUser();
+    }, 60000 * 3); // every 60 seconds
+
+    return () => clearInterval(interval);
   }, []);
 
   const MINUTES_BEFORE_FADE = 30;

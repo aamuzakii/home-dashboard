@@ -1,4 +1,5 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
+import RiskInResiko from "./RiskInResiko";
 
 type WorkTrackerProps = {
   workedHours: number;
@@ -16,6 +17,8 @@ function WorkTracker({ workedHours, obligationHours }: WorkTrackerProps) {
   const remaining = Math.max(0, obligationHours - workedHours);
   const remainingHours = Math.floor(remaining);
   const remainingMinutes = Math.round((remaining - remainingHours) * 60);
+
+  const remainingTotalMinutes = Math.round(remaining * 60);
 
   const obligationHoursPart = Math.floor(obligationHours);
   const obligationMinutesPart = Math.round((obligationHours - obligationHoursPart) * 60);
@@ -92,6 +95,8 @@ function WorkTracker({ workedHours, obligationHours }: WorkTrackerProps) {
       already work {hours}h {minutes}m / {obligationHoursPart}h {obligationMinutesPart}m
     </p>
   </Box>
+
+  {/* <RiskInResiko minutes={remainingTotalMinutes} /> */}
 </div>
   );
 }
