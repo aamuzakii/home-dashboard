@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { PRAYER_TIMES } from "./constants";
 import AzanTimer from "./AzanTimer";
 import WorkTracker from "./WorkTracker";
@@ -133,7 +133,42 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  const MINUTES_BEFORE_FADE = 30;
+  const wakeLock = useRef<WakeLockSentinel | null>(null);
+
+  useEffect(() => {
+    const requestWakeLock = async () => {
+      if ("wakeLock" in navigator) {
+        try {
+          wakeLock.current = await navigator.wakeLock.request("screen");
+          console.log("Wake lock active");
+
+          wakeLock.current.addEventListener("release", () => {
+            console.log("Wake lock released");
+          });
+        } catch (err: any) {
+          console.error("Wake lock error:", err);
+        }
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (wakeLock.current !== null && document.visibilityState === "visible") {
+        requestWakeLock();
+      }
+    };
+
+    requestWakeLock();
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      if (wakeLock.current !== null) {
+        wakeLock.current.release();
+      }
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
+  const MINUTES_BEFORE_FADE = 10;
 
   const minutes = Math.floor(timeSince / 60);
   const seconds = timeSince % 60;
