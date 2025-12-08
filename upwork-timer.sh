@@ -30,9 +30,8 @@ fi
 
 OBLIGATION=$(echo "$FULL_DAYS + $HOURS_TODAY" | bc -l)
 
-# Cap by maximum obligation (max 40 hours)
-if (( $(echo "$OBLIGATION > $WEEKLY_OBLIGATION" | bc -l) )); then
-  OBLIGATION=$WEEKLY_OBLIGATION
+if (( $(echo "$OBLIGATION > $(( DAY * DAILY_OBLIGATION ))" | bc -l) )); then
+  OBLIGATION=$(( DAY * DAILY_OBLIGATION ))
 fi
 
 # Cap by maximum obligation by weekday (Mon=1..Fri=5)
@@ -42,16 +41,16 @@ OBLIGATION_MINUTE=$(echo "$OBLIGATION * 60" | bc)
 LOGFILE="/Users/aamuzakii/Library/Application Support/Upwork/Upwork/Logs/upwork..$(date +%Y%m%d).log"
 
 # Extract the last occurrence of minutesWorkedThisWeek value
-WORK_MINUTES=$(grep -o '"minutesWorkedThisWeek": [0-9]*' "$LOGFILE" \
+MINUTES=$(grep -o '"minutesWorkedThisWeek": [0-9]*' "$LOGFILE" \
   | awk '{print $2}' \
   | grep -v '^0$' \
   | tail -n 1)
   
-echo "Minutes worked this week: $WORK_MINUTES"
-if [ -n "$WORK_MINUTES" ]; then
+echo "Minutes worked this week: $MINUTES"
+if [ -n "$MINUTES" ]; then
   RESPONSE=$(curl -s -X GET \
     -H "Content-Type: application/json" \
-    https://home-dashboard-lac.vercel.app/api/user/$WORK_MINUTES/$OBLIGATION_MINUTE)
+    https://home-dashboard-lac.vercel.app/api/user/$MINUTES/$OBLIGATION_MINUTE)
 
   echo "Response: $RESPONSE"
 fi
