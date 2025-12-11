@@ -1,6 +1,6 @@
 generator client {
-  provider   = "prisma-client"
-  output     = "./generated"
+  provider = "prisma-client"
+  output   = "./generated"
 }
 
 datasource db {
@@ -8,13 +8,15 @@ datasource db {
 }
 
 model User {
-  id                Int     @id @default(autoincrement())
-  email             String  @unique
-  name              String?
-  posts             Post[]
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+  posts Post[]
 
-  weeklyMinutes     Int      @default(0)   // total worked minutes this week
-  obligationMinutes Int      @default(2400) // default 40 hours = 40*60
+  weeklyMinutes          Int @default(0) // total worked minutes this week
+  obligationMinutes      Int @default(2400) // default 40 hours = 40*60
+  quranMinutes           Int @default(0) // default 40 hours = 40*60
+  quranObligationMinutes Int @default(210) // default 40 hours = 40*60
 }
 
 model Post {
