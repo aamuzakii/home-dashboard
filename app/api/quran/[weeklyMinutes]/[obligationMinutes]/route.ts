@@ -14,15 +14,15 @@ export async function GET(
   _request: NextRequest,
   context: {
     params: Promise<{
-      quranMinutes: string;
-      quranObligationMinutes: string;
+      weeklyMinutes: string;
+      obligationMinutes: string;
     }>;
   }
 ) {
-  const { quranMinutes, quranObligationMinutes } = await context.params;
+  const { weeklyMinutes, obligationMinutes } = await context.params;
 
-  const quranMinutesNumber = Number(quranMinutes);
-  const quranObligationMinutesNumber = Number(quranObligationMinutes);
+  const quranMinutesNumber = Number(weeklyMinutes);
+  const quranObligationMinutesNumber = Number(obligationMinutes);
   // console.log(context.params, "<<");
 
   if (
