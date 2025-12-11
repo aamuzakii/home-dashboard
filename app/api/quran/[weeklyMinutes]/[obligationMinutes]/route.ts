@@ -1,3 +1,5 @@
+// https://home-dashboard-lac.vercel.app/api/user/$MINUTES/$OBLIGATION_MINUTE)
+// /api/quran/$MINUTES/$OBLIGATION_MINUTE)
 import { PrismaClient } from "@/prisma/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { NextRequest, NextResponse } from "next/server";

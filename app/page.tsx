@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { PRAYER_TIMES } from "./constants";
 import AzanTimer from "./AzanTimer";
 import WorkTracker from "./WorkTracker";
+import QuranTracker from "./QuranTracker";
 
 /**
  * Get the last prayer time (could be Isha of yesterday if before Fajr),
@@ -145,7 +146,7 @@ export default function Home() {
           wakeLock.current.addEventListener("release", () => {
             console.log("Wake lock released");
           });
-        } catch (err: any) {
+        } catch (err) {
           console.error("Wake lock error:", err);
         }
       }
@@ -206,6 +207,12 @@ export default function Home() {
 
         {!showTimer && hasWorkData && (
           <WorkTracker
+            workedHours={workedHours}
+            obligationHours={obligationHours}
+          />
+        )}
+        {!showTimer && hasWorkData && (
+          <QuranTracker
             workedHours={workedHours}
             obligationHours={obligationHours}
           />
