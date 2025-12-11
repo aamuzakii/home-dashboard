@@ -12,23 +12,23 @@ export async function GET(
   _request: NextRequest,
   context: {
     params: Promise<{
-      weeklyMinutes: string;
-      obligationMinutes: string;
+      quranMinutes: string;
+      quranObligationMinutes: string;
     }>;
   }
 ) {
-  const { weeklyMinutes, obligationMinutes } = await context.params;
+  const { quranMinutes, quranObligationMinutes } = await context.params;
 
-  const weeklyMinutesNumber = Number(weeklyMinutes);
-  const obligationMinutesNumber = Number(obligationMinutes);
+  const quranMinutesNumber = Number(quranMinutes);
+  const quranObligationMinutesNumber = Number(quranObligationMinutes);
   // console.log(context.params, "<<");
 
   if (
-    Number.isNaN(weeklyMinutesNumber) ||
-    Number.isNaN(obligationMinutesNumber)
+    Number.isNaN(quranMinutesNumber) ||
+    Number.isNaN(quranObligationMinutesNumber)
   ) {
     return NextResponse.json(
-      { error: "weeklyMinutes and obligationMinutes must be numbers" },
+      { error: "quranMinutes and quranObligationMinutes must be numbers" },
       { status: 400 }
     );
   }
@@ -46,16 +46,16 @@ export async function GET(
     const updatedUser = await prisma.user.update({
       where: { id: user.id },
       data: {
-        weeklyMinutes: weeklyMinutesNumber,
-        obligationMinutes: obligationMinutesNumber,
+        quranMinutes: quranMinutesNumber,
+        quranObligationMinutes: quranObligationMinutesNumber,
       },
     });
 
     return NextResponse.json({
       id: updatedUser.id,
       name: updatedUser.name,
-      weeklyMinutes: updatedUser.weeklyMinutes,
-      obligationMinutes: updatedUser.obligationMinutes,
+      quranMinutes: updatedUser.quranMinutes,
+      quranObligationMinutes: updatedUser.quranObligationMinutes,
     });
   } catch (error) {
     console.error("Error updating user", error);

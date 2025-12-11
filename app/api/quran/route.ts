@@ -18,10 +18,10 @@ export async function GET() {
     const name = user.name ?? "Anonymous";
 
 
-    const weeklyMinutes = user.weeklyMinutes ?? 0;
-    const obligationMinutes = user.obligationMinutes ?? 0;
+    const quranMinutes = user.quranMinutes ?? 0;
+    const quranObligationMinutes = user.quranObligationMinutes ?? 0;
 
-    return NextResponse.json({ name, weeklyMinutes, obligationMinutes });
+    return NextResponse.json({ name, quranMinutes, quranObligationMinutes });
   } catch (error) {
     console.error("Error fetching user", error);
     return NextResponse.json(

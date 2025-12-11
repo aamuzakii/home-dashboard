@@ -30,12 +30,16 @@ export type UserAvgAggregateOutputType = {
   id: number | null
   weeklyMinutes: number | null
   obligationMinutes: number | null
+  quranMinutes: number | null
+  quranObligationMinutes: number | null
 }
 
 export type UserSumAggregateOutputType = {
   id: number | null
   weeklyMinutes: number | null
   obligationMinutes: number | null
+  quranMinutes: number | null
+  quranObligationMinutes: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -44,6 +48,8 @@ export type UserMinAggregateOutputType = {
   name: string | null
   weeklyMinutes: number | null
   obligationMinutes: number | null
+  quranMinutes: number | null
+  quranObligationMinutes: number | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -52,6 +58,8 @@ export type UserMaxAggregateOutputType = {
   name: string | null
   weeklyMinutes: number | null
   obligationMinutes: number | null
+  quranMinutes: number | null
+  quranObligationMinutes: number | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -60,6 +68,8 @@ export type UserCountAggregateOutputType = {
   name: number
   weeklyMinutes: number
   obligationMinutes: number
+  quranMinutes: number
+  quranObligationMinutes: number
   _all: number
 }
 
@@ -68,12 +78,16 @@ export type UserAvgAggregateInputType = {
   id?: true
   weeklyMinutes?: true
   obligationMinutes?: true
+  quranMinutes?: true
+  quranObligationMinutes?: true
 }
 
 export type UserSumAggregateInputType = {
   id?: true
   weeklyMinutes?: true
   obligationMinutes?: true
+  quranMinutes?: true
+  quranObligationMinutes?: true
 }
 
 export type UserMinAggregateInputType = {
@@ -82,6 +96,8 @@ export type UserMinAggregateInputType = {
   name?: true
   weeklyMinutes?: true
   obligationMinutes?: true
+  quranMinutes?: true
+  quranObligationMinutes?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -90,6 +106,8 @@ export type UserMaxAggregateInputType = {
   name?: true
   weeklyMinutes?: true
   obligationMinutes?: true
+  quranMinutes?: true
+  quranObligationMinutes?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -98,6 +116,8 @@ export type UserCountAggregateInputType = {
   name?: true
   weeklyMinutes?: true
   obligationMinutes?: true
+  quranMinutes?: true
+  quranObligationMinutes?: true
   _all?: true
 }
 
@@ -193,6 +213,8 @@ export type UserGroupByOutputType = {
   name: string | null
   weeklyMinutes: number
   obligationMinutes: number
+  quranMinutes: number
+  quranObligationMinutes: number
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -224,6 +246,8 @@ export type UserWhereInput = {
   name?: Prisma.StringNullableFilter<"User"> | string | null
   weeklyMinutes?: Prisma.IntFilter<"User"> | number
   obligationMinutes?: Prisma.IntFilter<"User"> | number
+  quranMinutes?: Prisma.IntFilter<"User"> | number
+  quranObligationMinutes?: Prisma.IntFilter<"User"> | number
   posts?: Prisma.PostListRelationFilter
 }
 
@@ -233,6 +257,8 @@ export type UserOrderByWithRelationInput = {
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   weeklyMinutes?: Prisma.SortOrder
   obligationMinutes?: Prisma.SortOrder
+  quranMinutes?: Prisma.SortOrder
+  quranObligationMinutes?: Prisma.SortOrder
   posts?: Prisma.PostOrderByRelationAggregateInput
 }
 
@@ -245,6 +271,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringNullableFilter<"User"> | string | null
   weeklyMinutes?: Prisma.IntFilter<"User"> | number
   obligationMinutes?: Prisma.IntFilter<"User"> | number
+  quranMinutes?: Prisma.IntFilter<"User"> | number
+  quranObligationMinutes?: Prisma.IntFilter<"User"> | number
   posts?: Prisma.PostListRelationFilter
 }, "id" | "email">
 
@@ -254,6 +282,8 @@ export type UserOrderByWithAggregationInput = {
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   weeklyMinutes?: Prisma.SortOrder
   obligationMinutes?: Prisma.SortOrder
+  quranMinutes?: Prisma.SortOrder
+  quranObligationMinutes?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -270,6 +300,8 @@ export type UserScalarWhereWithAggregatesInput = {
   name?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   weeklyMinutes?: Prisma.IntWithAggregatesFilter<"User"> | number
   obligationMinutes?: Prisma.IntWithAggregatesFilter<"User"> | number
+  quranMinutes?: Prisma.IntWithAggregatesFilter<"User"> | number
+  quranObligationMinutes?: Prisma.IntWithAggregatesFilter<"User"> | number
 }
 
 export type UserCreateInput = {
@@ -277,6 +309,8 @@ export type UserCreateInput = {
   name?: string | null
   weeklyMinutes?: number
   obligationMinutes?: number
+  quranMinutes?: number
+  quranObligationMinutes?: number
   posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
 }
 
@@ -286,6 +320,8 @@ export type UserUncheckedCreateInput = {
   name?: string | null
   weeklyMinutes?: number
   obligationMinutes?: number
+  quranMinutes?: number
+  quranObligationMinutes?: number
   posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
 }
 
@@ -294,6 +330,8 @@ export type UserUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   weeklyMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   obligationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  quranMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  quranObligationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
 }
 
@@ -303,6 +341,8 @@ export type UserUncheckedUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   weeklyMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   obligationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  quranMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  quranObligationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
@@ -312,6 +352,8 @@ export type UserCreateManyInput = {
   name?: string | null
   weeklyMinutes?: number
   obligationMinutes?: number
+  quranMinutes?: number
+  quranObligationMinutes?: number
 }
 
 export type UserUpdateManyMutationInput = {
@@ -319,6 +361,8 @@ export type UserUpdateManyMutationInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   weeklyMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   obligationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  quranMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  quranObligationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -327,6 +371,8 @@ export type UserUncheckedUpdateManyInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   weeklyMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   obligationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  quranMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  quranObligationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -335,12 +381,16 @@ export type UserCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   weeklyMinutes?: Prisma.SortOrder
   obligationMinutes?: Prisma.SortOrder
+  quranMinutes?: Prisma.SortOrder
+  quranObligationMinutes?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   weeklyMinutes?: Prisma.SortOrder
   obligationMinutes?: Prisma.SortOrder
+  quranMinutes?: Prisma.SortOrder
+  quranObligationMinutes?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -349,6 +399,8 @@ export type UserMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   weeklyMinutes?: Prisma.SortOrder
   obligationMinutes?: Prisma.SortOrder
+  quranMinutes?: Prisma.SortOrder
+  quranObligationMinutes?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -357,12 +409,16 @@ export type UserMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   weeklyMinutes?: Prisma.SortOrder
   obligationMinutes?: Prisma.SortOrder
+  quranMinutes?: Prisma.SortOrder
+  quranObligationMinutes?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   weeklyMinutes?: Prisma.SortOrder
   obligationMinutes?: Prisma.SortOrder
+  quranMinutes?: Prisma.SortOrder
+  quranObligationMinutes?: Prisma.SortOrder
 }
 
 export type UserNullableScalarRelationFilter = {
@@ -407,6 +463,8 @@ export type UserCreateWithoutPostsInput = {
   name?: string | null
   weeklyMinutes?: number
   obligationMinutes?: number
+  quranMinutes?: number
+  quranObligationMinutes?: number
 }
 
 export type UserUncheckedCreateWithoutPostsInput = {
@@ -415,6 +473,8 @@ export type UserUncheckedCreateWithoutPostsInput = {
   name?: string | null
   weeklyMinutes?: number
   obligationMinutes?: number
+  quranMinutes?: number
+  quranObligationMinutes?: number
 }
 
 export type UserCreateOrConnectWithoutPostsInput = {
@@ -438,6 +498,8 @@ export type UserUpdateWithoutPostsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   weeklyMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   obligationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  quranMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  quranObligationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type UserUncheckedUpdateWithoutPostsInput = {
@@ -446,6 +508,8 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   weeklyMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   obligationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  quranMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  quranObligationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -485,6 +549,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   weeklyMinutes?: boolean
   obligationMinutes?: boolean
+  quranMinutes?: boolean
+  quranObligationMinutes?: boolean
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -495,6 +561,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   weeklyMinutes?: boolean
   obligationMinutes?: boolean
+  quranMinutes?: boolean
+  quranObligationMinutes?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -503,6 +571,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   weeklyMinutes?: boolean
   obligationMinutes?: boolean
+  quranMinutes?: boolean
+  quranObligationMinutes?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -511,9 +581,11 @@ export type UserSelectScalar = {
   name?: boolean
   weeklyMinutes?: boolean
   obligationMinutes?: boolean
+  quranMinutes?: boolean
+  quranObligationMinutes?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "weeklyMinutes" | "obligationMinutes", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "weeklyMinutes" | "obligationMinutes" | "quranMinutes" | "quranObligationMinutes", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -532,6 +604,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: string | null
     weeklyMinutes: number
     obligationMinutes: number
+    quranMinutes: number
+    quranObligationMinutes: number
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -961,6 +1035,8 @@ export interface UserFieldRefs {
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly weeklyMinutes: Prisma.FieldRef<"User", 'Int'>
   readonly obligationMinutes: Prisma.FieldRef<"User", 'Int'>
+  readonly quranMinutes: Prisma.FieldRef<"User", 'Int'>
+  readonly quranObligationMinutes: Prisma.FieldRef<"User", 'Int'>
 }
     
 
