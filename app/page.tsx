@@ -213,8 +213,6 @@ export default function Home() {
         )}
         {!showTimer && hasWorkData && (
           <QuranTracker
-            workedHours={workedHours}
-            obligationHours={obligationHours}
           />
         )}
       </main>

@@ -7,54 +7,58 @@ type WorkTrackerProps = {
   obligationHours: number;
 };
 
-function WorkTracker({ workedHours, obligationHours }: WorkTrackerProps) {
+function WorkTracker() {
+  const [weeklyMinutes, setWeeklyMinutes] = useState<number | null>(null);
+  const [obligationMinutes, setObligationMinutes] = useState<number | null>(
+    null
+  );
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("/api/quran");
+        console.log(res, "res");
 
-    const [weeklyMinutes, setWeeklyMinutes] = useState<number | null>(null);
-    const [obligationMinutes, setObligationMinutes] = useState<number | null>(
-      null
-    );
-    
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!data) return;
+        console.log(data, "data");
+console.log(typeof data.quranMinutes, "<< data.quranMinutes");
+
+        if (typeof data.quranMinutes === "number") {
+          console.log('daele');
+          
+          setWeeklyMinutes(data.quranMinutes);
+        }
+
+        if (typeof data.quranObligationMinutes === "number") {
+          setObligationMinutes(data.quranObligationMinutes);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user", error);
+      }
+    };
+
+    fetchUser();
+
+    const interval = setInterval(() => {
+      fetchUser();
+    }, 6000 * 1); // every 
+
+    return () => clearInterval(interval);
+  }, []);
+
+  console.log(obligationMinutes);
+  
+
   const hasWorkData =
     typeof weeklyMinutes === "number" && typeof obligationMinutes === "number";
-   workedHours = hasWorkData ? weeklyMinutes / 60 : 0;
-   obligationHours = hasWorkData ? obligationMinutes / 60 : 0;
-
-      useEffect(() => {
-        const fetchUser = async () => {
-          try {
-            const res = await fetch("/api/quran");
-            if (!res.ok) return;
-            const data = await res.json();
-            if (!data) return;
-    
-    
-            if (typeof data.weeklyMinutes === "number") {
-              setWeeklyMinutes(data.weeklyMinutes);
-            }
-    
-            if (typeof data.obligationMinutes === "number") {
-              setObligationMinutes(data.obligationMinutes);
-            }
-          } catch (error) {
-            console.error("Failed to fetch user", error);
-          }
-        };
-    
-        fetchUser();
-    
-        const interval = setInterval(() => {
-          fetchUser();
-        }, 60000 * 3); // every 60 seconds
-    
-        return () => clearInterval(interval);
-      }, []);
-    
-
+  const workedHours = hasWorkData ? weeklyMinutes / 60 : 0;
+  const obligationHours = hasWorkData ? obligationMinutes / 60 : 0;
 
   const percentage = Math.max(
     0,
-    Math.min(100, (workedHours / (obligationHours || 1)) * 100),
+    Math.min(100, (workedHours / (obligationHours || 1)) * 100)
   );
 
   const hours = Math.floor(workedHours);
@@ -66,53 +70,61 @@ function WorkTracker({ workedHours, obligationHours }: WorkTrackerProps) {
   const remainingTotalMinutes = Math.round(remaining * 60);
 
   const obligationHoursPart = Math.floor(obligationHours);
-  const obligationMinutesPart = Math.round((obligationHours - obligationHoursPart) * 60);
+  const obligationMinutesPart = Math.round(
+    (obligationHours - obligationHoursPart) * 60
+  );
 
   return (
     <div className="flex w-full flex-col items-center gap-4">
-  <Box display="flex" flexDirection="column" alignItems="center" gap={2} width="100%">
-    <Typography
-      variant="caption"
-      sx={{
-        textTransform: "uppercase",
-        letterSpacing: "0.25em",
-        fontWeight: 600,
-      }}
-    >
-      need
-    </Typography>
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        gap={2}
+        width="100%"
+      >
+        <Typography
+          variant="caption"
+          sx={{
+            textTransform: "uppercase",
+            letterSpacing: "0.25em",
+            fontWeight: 600,
+          }}
+        >
+          need
+        </Typography>
 
-    <Typography
-      variant="h4"
-      sx={{
-        mt: 0.5,
-        fontWeight: 600,
-        fontVariantNumeric: "tabular-nums",
-      }}
-    >
-      {remainingHours}h {remainingMinutes}m
-    </Typography>
+        <Typography
+          variant="h4"
+          sx={{
+            mt: 0.5,
+            fontWeight: 600,
+            fontVariantNumeric: "tabular-nums",
+          }}
+        >
+          {remainingHours}h {remainingMinutes}m
+        </Typography>
 
-    <Box width="80%" mt={2}>
-      <LinearProgress
-        variant="determinate"
-        value={percentage}
-        sx={{
-          height: 12,
-          borderRadius: 6,
-          backgroundColor: "red",
-          
-        }}
-      />
-    </Box>
-  </Box>
+        <Box width="80%" mt={2}>
+          <LinearProgress
+            variant="determinate"
+            value={percentage}
+            sx={{
+              height: 12,
+              borderRadius: 6,
+              backgroundColor: "red",
+            }}
+          />
+        </Box>
+      </Box>
 
-  <p className="text-sm text-zinc-600 dark:text-zinc-400">
-    already work {hours}h {minutes}m / {obligationHoursPart}h {obligationMinutesPart}m
-  </p>
-  {/* <RiskInResiko minutes={remainingTotalMinutes} /> */}
-</div>
+      <p className="text-sm text-zinc-600 dark:text-zinc-400">
+        already work {hours}h {minutes}m / {obligationHoursPart}h{" "}
+        {obligationMinutesPart}m
+      </p>
+      {/* <RiskInResiko minutes={remainingTotalMinutes} /> */}
+    </div>
   );
 }
 
-export default WorkTracker
+export default WorkTracker;
