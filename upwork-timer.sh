@@ -38,6 +38,11 @@ fi
 
 echo "Obligation: ${OBLIGATION}h"
 OBLIGATION_MINUTE=$(echo "$OBLIGATION * 60" | bc)
+# weekly cap OBLIGATION_MINUTE at 40 hours
+if (( $(echo "$OBLIGATION_MINUTE > 2400" | bc -l) )); then
+  OBLIGATION_MINUTE=2400 
+fi
+
 LOGFILE="/Users/aamuzakii/Library/Application Support/Upwork/Upwork/Logs/upwork..$(date +%Y%m%d).log"
 
 # Extract the last occurrence of minutesWorkedThisWeek value
