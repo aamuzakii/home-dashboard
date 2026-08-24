@@ -1,0 +1,16 @@
+app/page.tsx
+  h_c4173283d1eb1d 214,217
+app/api/user/[weeklyMinutes]/[obligationMinutes]/route.ts
+  h_c4173283d1eb1d 4,12-46,90-93,99
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "7bb17696dcae9ff4749bd1afc372fb649689f444",
+  "prompts": {},
+  "humans": {
+    "h_c4173283d1eb1d": {
+      "author": "Abdullah Al Muzaki <aamuzakii@gmail.com>"
+    }
+  }
+}
