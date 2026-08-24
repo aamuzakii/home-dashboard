@@ -1,5 +1,7 @@
+import { useEffect, useRef } from "react";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import RiskInResiko from "./RiskInResiko";
+import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from "@/lib/supabase";
 
 type WorkTrackerProps = {
   workedHours: number;
@@ -7,6 +9,48 @@ type WorkTrackerProps = {
 };
 
 function WorkTracker({ workedHours, obligationHours }: WorkTrackerProps) {
+  const lastThreadsAccessValue = useRef<boolean | null>(null);
+  const threadsAccessEnabled = Number.isFinite(obligationHours) && obligationHours < 3;
+
+  useEffect(() => {
+    if (lastThreadsAccessValue.current === threadsAccessEnabled) return;
+
+    const controller = new AbortController();
+
+    const updateThreadsAccess = async () => {
+      try {
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/extension_flags?key=eq.threads_access`,
+          {
+            method: "PATCH",
+            headers: {
+              apikey: SUPABASE_PUBLISHABLE_KEY,
+              Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+              "Content-Type": "application/json",
+              Prefer: "return=minimal",
+            },
+            body: JSON.stringify({ enabled: threadsAccessEnabled }),
+            signal: controller.signal,
+          },
+        );
+
+        if (!response.ok) {
+          throw new Error(`Supabase returned ${response.status}`);
+        }
+
+        lastThreadsAccessValue.current = threadsAccessEnabled;
+      } catch (error) {
+        if (!controller.signal.aborted) {
+          console.error("Failed to update Threads access", error);
+        }
+      }
+    };
+
+    updateThreadsAccess();
+
+    return () => controller.abort();
+  }, [threadsAccessEnabled]);
+
   const percentage = Math.max(
     0,
     Math.min(100, (workedHours / (obligationHours || 1)) * 100),
