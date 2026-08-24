@@ -211,10 +211,10 @@ export default function Home() {
             obligationHours={obligationHours}
           />
         )}
-        {!showTimer && hasWorkData && (
+        {/* {!showTimer && hasWorkData && (
           <QuranTracker
           />
-        )}
+        )} */}
       </main>
     </div>
   );
