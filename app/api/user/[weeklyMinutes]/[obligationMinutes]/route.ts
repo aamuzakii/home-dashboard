@@ -10,6 +10,8 @@ const adapter = new PrismaPg({
 const prisma = new PrismaClient({ adapter });
 
 async function syncThreadsAccess(obligationMinutes: number) {
+
+  console.log(obligationMinutes, "obligationMinutes")
   const enabled = obligationMinutes < 3 * 60;
   const response = await fetch(
     `${SUPABASE_URL}/rest/v1/extension_flags?key=eq.threads_access`,
