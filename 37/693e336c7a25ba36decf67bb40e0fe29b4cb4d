@@ -1,0 +1,23 @@
+supabase/extension_flags.sql
+  s_abccb1f37e2637::t_df07fa6b0cfb04 1-25
+app/WorkTracker.tsx
+  s_abccb1f37e2637::t_df07fa6b0cfb04 1,4,12-53,148
+lib/supabase.ts
+  s_abccb1f37e2637::t_df07fa6b0cfb04 1-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "37693e336c7a25ba36decf67bb40e0fe29b4cb4d",
+  "prompts": {},
+  "sessions": {
+    "s_abccb1f37e2637": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a032b0-40e5-7bb2-a3b7-386663877874",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "Abdullah Al Muzaki <aamuzakii@gmail.com>"
+    }
+  }
+}
