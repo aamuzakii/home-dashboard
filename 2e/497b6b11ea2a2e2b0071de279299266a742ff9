@@ -1,0 +1,14 @@
+app/api/user/[weeklyMinutes]/[obligationMinutes]/route.ts
+  h_c4173283d1eb1d 12,14,92
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "2e497b6b11ea2a2e2b0071de279299266a742ff9",
+  "prompts": {},
+  "humans": {
+    "h_c4173283d1eb1d": {
+      "author": "Abdullah Al Muzaki <aamuzakii@gmail.com>"
+    }
+  }
+}
