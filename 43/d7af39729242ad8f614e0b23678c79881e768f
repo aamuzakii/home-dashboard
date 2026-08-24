@@ -1,0 +1,14 @@
+lib/supabase.ts
+  h_c4173283d1eb1d 1-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "43d7af39729242ad8f614e0b23678c79881e768f",
+  "prompts": {},
+  "humans": {
+    "h_c4173283d1eb1d": {
+      "author": "Abdullah Al Muzaki <aamuzakii@gmail.com>"
+    }
+  }
+}
