@@ -3,15 +3,30 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { NextRequest, NextResponse } from "next/server";
 import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from "@/lib/supabase";
 
+
+// allowed ratio 1:4
+
+// monday 6/8 hours then u good to open social media
+
+
+// friday 
+// 40 hours
+// 10 hours
+
+
+
 const adapter = new PrismaPg({
   connectionString: `${process.env.DATABASE_URL}`,
 });
 
 const prisma = new PrismaClient({ adapter });
 
-async function syncThreadsAccess(remainingObligation: number) {
+async function syncThreadsAccess(obligationMinutes: number, weeklyMinutesWorked: number) {
 
-  const enabled = remainingObligation < 3 * 60;
+  const ACCESS_THRESHOLD = 0.75;
+
+  const progress = weeklyMinutesWorked / obligationMinutes;
+  const enabled = progress >= ACCESS_THRESHOLD;
   const response = await fetch(
     `${SUPABASE_URL}/rest/v1/extension_flags?key=eq.threads_access`,
     {
@@ -89,7 +104,7 @@ export async function GET(
     });
 
     const threadsAccessEnabled = await syncThreadsAccess(
-      updatedUser.obligationMinutes - updatedUser.weeklyMinutes,
+      updatedUser.obligationMinutes, updatedUser.weeklyMinutes,
     );
 
     return NextResponse.json({
