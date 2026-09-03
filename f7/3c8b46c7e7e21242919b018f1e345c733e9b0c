@@ -1,0 +1,14 @@
+upwork-timer.sh
+  h_c4173283d1eb1d 48-63,66-68,70
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "f73c8b46c7e7e21242919b018f1e345c733e9b0c",
+  "prompts": {},
+  "humans": {
+    "h_c4173283d1eb1d": {
+      "author": "Abdullah Al Muzaki <aamuzakii@gmail.com>"
+    }
+  }
+}
