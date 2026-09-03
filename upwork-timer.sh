@@ -45,17 +45,26 @@ fi
 
 LOGFILE="/Users/aamuzakii/Library/Application Support/Upwork/Upwork/Logs/upwork..$(date +%Y%m%d).log"
 
-# Extract the last occurrence of minutesWorkedThisWeek value
-MINUTES=$(grep -o '"minutesWorkedThisWeek": [0-9]*' "$LOGFILE" \
-  | awk '{print $2}' \
-  | grep -v '^0$' \
-  | tail -n 1)
+# Default to zero so the server is notified if the Upwork log is unavailable
+# or cannot be parsed.
+MINUTES=0
+
+# Extract the last occurrence of minutesWorkedThisWeek value only when the
+# expected log file exists.
+if [ -f "$LOGFILE" ]; then
+  PARSED_MINUTES=$(grep -o '"minutesWorkedThisWeek": [0-9]*' "$LOGFILE" \
+    | awk '{print $2}' \
+    | grep -v '^0$' \
+    | tail -n 1)
+
+  if [ -n "$PARSED_MINUTES" ]; then
+    MINUTES=$PARSED_MINUTES
+  fi
+fi
   
 echo "Minutes worked this week: $MINUTES"
-if [ -n "$MINUTES" ]; then
-  RESPONSE=$(curl -s -X GET \
-    -H "Content-Type: application/json" \
-    https://home-dashboard-lac.vercel.app/api/user/$MINUTES/$OBLIGATION_MINUTE)
+RESPONSE=$(curl -s -X GET \
+  -H "Content-Type: application/json" \
+  https://home-dashboard-lac.vercel.app/api/user/$MINUTES/$OBLIGATION_MINUTE)
 
-  echo "Response: $RESPONSE"
-fi
+echo "Response: $RESPONSE"
