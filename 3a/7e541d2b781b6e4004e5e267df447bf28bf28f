@@ -1,0 +1,22 @@
+app/api/user/[weeklyMinutes]/[obligationMinutes]/route.ts
+  s_c607c02e70dd0a::t_aab2d42a4df66c 29,36-37,39
+  s_c607c02e70dd0a::t_c9e88647554867 31,40-41
+  s_c607c02e70dd0a::t_3f0c1bd8115cf1 30,33-35,38
+  s_c607c02e70dd0a::t_10d256a97213d4 32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "3a7e541d2b781b6e4004e5e267df447bf28bf28f",
+  "prompts": {},
+  "sessions": {
+    "s_c607c02e70dd0a": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "46f5c001-702c-4ca8-88b4-64a432e86c00",
+        "model": "openrouter/SENDIRI/deepseek/deepseek-v4-pro-0813"
+      },
+      "human_author": "Abdullah Al Muzaki <aamuzakii@gmail.com>"
+    }
+  }
+}
