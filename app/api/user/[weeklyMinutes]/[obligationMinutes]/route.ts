@@ -26,7 +26,19 @@ async function syncThreadsAccess(obligationMinutes: number, weeklyMinutesWorked:
   const ACCESS_THRESHOLD = 0.75;
 
   const progress = weeklyMinutesWorked / obligationMinutes;
-  const enabled = progress >= ACCESS_THRESHOLD;
+  let enabled = progress >= ACCESS_THRESHOLD;
+
+  const day = new Date().getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+
+  // Weekend override: absolute minutes instead of the ratio default
+  if (day === 6) {
+    // Saturday
+    enabled = weeklyMinutesWorked >= obligationMinutes - 5;
+  } else if (day === 0) {
+    // Sunday
+    enabled = weeklyMinutesWorked >= obligationMinutes;
+  }
+
   const response = await fetch(
     `${SUPABASE_URL}/rest/v1/extension_flags?key=eq.threads_access`,
     {
